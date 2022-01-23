@@ -24,26 +24,23 @@ async function authoVerify(req:any, res: any, next:any) {
   let token= req.headers[`authorization`].replace('Bearer ', '')
   // si no hay token no lo dejo seguir
   if(!token){
-    res.send('Token not found')
+    res.send({succes:false,error:"Token not provider"})
   }
   //si existe el token verifico que sea valido o no este expirado
-  jwt.verify(token,TK_S,undefined,async (error:any, sucess:any) => {
-    if (error) {
-      res.status(401).send(error)
-    } else {
-      // aqui verifico la ruta en la que estamos
+  try{
+    let decode:any= jwt.verify(token,TK_S,{complete:true})
+    if(decode){
       const {path}=req.route
       console.log(path)
-      // cada rol tendra una lista de rutas que podra acceder, si la ruta actual no se 
-      // encuentra en las permitidas a este rol , no se lo deja seguir
-      if(!getRoutesPermition(sucess.role).includes(path)){
+      if(!getRoutesPermition(decode.role).includes(path)){
         res.send('Not autorized access in this section')
       }
       // en caso contrario pasa 
-      req.token = sucess
+      req.token = decode
       next()
     }
-  })
-  
+  }catch(e){
+    res.status(400).json({success:false,error:e})
+  } 
 }
 export = authoVerify
