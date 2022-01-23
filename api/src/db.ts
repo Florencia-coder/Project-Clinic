@@ -62,6 +62,6 @@ WorkingHours.belongsToMany(Professional, {through: 'WorkingHours_Professional'})
 
   
 module.exports={
-  ...sequelize.models,
+  models: sequelize.models,
   conn: sequelize,
 }
