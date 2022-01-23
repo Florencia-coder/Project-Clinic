@@ -1,5 +1,5 @@
 import {DataTypes} from "sequelize";
-
+const bcrypt =require('bcrypt')
 
 export=(sequelize:any)=>{
   sequelize.define('Superuser', {
@@ -17,8 +17,8 @@ export=(sequelize:any)=>{
       type:DataTypes.STRING,
       allowNull:true
     },
-    birth:{
-      type:DataTypes.STRING,
+    age:{
+      type:DataTypes.INTEGER,
       allowNull:true
     },
     dni:{
@@ -37,6 +37,20 @@ export=(sequelize:any)=>{
     role:{
       type:DataTypes.STRING,
       allowNull:false
-    }
-})
+    },
+  },{timestamps:false,
+    hooks:{
+    beforeCreate: async (user:any) => {
+      if (user.password) {
+       const salt = await bcrypt.genSaltSync(10, 'a');
+       user.password = bcrypt.hashSync(user.password, salt);
+      }
+     },
+     beforeUpdate:async (user:any) => {
+      if (user.password) {
+       const salt = await bcrypt.genSaltSync(10, 'a');
+       user.password = bcrypt.hashSync(user.password, salt);
+      }
+     }
+  }},)
 }
