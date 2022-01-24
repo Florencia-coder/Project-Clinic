@@ -44,7 +44,7 @@ export=(sequelize:any)=>{
             allowNull: false
           },
         role:{
-          type: DataTypes.ENUM('receptionist'), //esto significa que el dato que tiene que se ingresa unicamente es un string 'receptionist'
+          type: DataTypes.STRING,
           allowNull: false
         }
       },{timestamps:false,
