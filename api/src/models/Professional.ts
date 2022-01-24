@@ -1,4 +1,5 @@
 import {DataTypes} from "sequelize";
+const bcrypt =require('bcrypt')
 
 
 export=(sequelize:any)=>{
@@ -46,5 +47,19 @@ export=(sequelize:any)=>{
           type: DataTypes.ENUM('professional'), //esto significa que el dato que tiene que se ingresa unicamente es un string 'professional'
           allowNull: false
         }
-      },{timestamps:false});
+      },{timestamps:false,
+        hooks:{
+        beforeCreate: async (user:any) => {
+          if (user.password) {
+           const salt = await bcrypt.genSaltSync(10, 'a');
+           user.password = bcrypt.hashSync(user.password, salt);
+          }
+         },
+         beforeUpdate:async (user:any) => {
+          if (user.password) {
+           const salt = await bcrypt.genSaltSync(10, 'a');
+           user.password = bcrypt.hashSync(user.password, salt);
+          }
+         }
+      }});
 }
