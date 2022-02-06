@@ -16,7 +16,7 @@ export=(sequelize:any)=>{
         },
         lastname:{
           type:DataTypes.STRING,
-          allowNull:false
+          allowNull:false,
         },
         DNI:{
           type:DataTypes.STRING,
@@ -24,11 +24,11 @@ export=(sequelize:any)=>{
         },
         birth:{
           type:DataTypes.STRING,
-          allowNull:false
+          allowNull:true
         },
         adress:{
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         mail:{
             unique:true,
@@ -41,7 +41,7 @@ export=(sequelize:any)=>{
         },
         phone:{
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         role:{
           type: DataTypes.STRING, 
