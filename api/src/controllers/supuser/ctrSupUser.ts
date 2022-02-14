@@ -13,9 +13,9 @@ async function getAdmins(req:Request,res:Response):Promise<void>{
 // Admins atributos obligatorios para el registro
 // dni mail password role
 async function postAdmin(req:Request,res:Response){
-    const {dni,mail,password,role}= req.body
-    if(dni&&mail&&password&&role){
-        let [user,created]= await Management.findOrCreate({where:{mail:mail},defaults:{password,role,dni}})
+    const {mail,password,role,username}= req.body
+    if(mail&&password&&role){
+        let [user,created]= await Management.findOrCreate({where:{mail:mail},defaults:{password,role,username}})
         if(created){
             return res.status(201).json({msg:"Admin registered successfully"})
         }else{
