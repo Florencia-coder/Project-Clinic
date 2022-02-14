@@ -10,6 +10,22 @@ export=(sequelize:any)=>{
           type:DataTypes.UUID,
           defaultValue:DataTypes.UUIDV4
         },
+        dni:{
+          type:DataTypes.INTEGER,
+          allowNull:true
+        },
+        firstName:{
+          type:DataTypes.STRING(100),
+          allowNull:true
+        },
+        lastName:{
+          type:DataTypes.STRING(100),
+          allowNull:true
+        },
+        phoneNumber:{
+          type:DataTypes.INTEGER,
+          allowNull:true
+        },
         username: {
           type: DataTypes.STRING,
           allowNull: false,
