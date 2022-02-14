@@ -35,7 +35,7 @@ if(files?.length>0){
 modelsDefine.forEach((model: any) =>model(sequelize))
 
 
-const{ MedicalSpecialties, Professional, Patient, WorkingHours, ConsultingRoom, ClinicHistory}= sequelize.models;
+const{ MedicalSpecialties, Professional, Patient,Turn, WorkingHours, ConsultingRoom, ClinicHistory}= sequelize.models;
 
 
 // Profesionales puede tener muchas especialidades 
@@ -54,6 +54,11 @@ Professional.belongsToMany(WorkingHours, {through: 'WorkingHours_Professional'})
 //Y un horario puede tener muchos profesionales
 WorkingHours.belongsToMany(Professional, {through: 'WorkingHours_Professional'})
 
+//Profesionales tienen muchos pacientes
+Professional.belongsToMany(Patient, {through: Turn})
+
+//Pacientes tienen muchos profesionales
+Patient.belongsToMany(Professional, {through: Turn})
 
 //Professional.hasMany(Workinghours); 
 
@@ -62,6 +67,6 @@ WorkingHours.belongsToMany(Professional, {through: 'WorkingHours_Professional'})
 
   
 module.exports={
-  ...sequelize.models,
+   ...sequelize.models,
   conn: sequelize,
 }
